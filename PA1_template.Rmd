@@ -29,7 +29,8 @@ Dataset source: [Activity monitoring data](https://d396qusza40orc.cloudfront.net
 ```{r}
       StepsPerDay <- aggregate(dataComp$steps, by=list(dataComp$date), FUN=sum)
       names(StepsPerDay) = c("Date", "Steps")
-      ggplot(StepsPerDay, aes(Steps)) + geom_histogram(binwidth=1000, color="darkblue", fill="lightblue") + xlab('Number of steps') + ylab('Amount')
+      g <- ggplot(StepsPerDay, aes(Steps)) + geom_histogram(binwidth=1000, color="darkblue", fill="lightblue") + xlab('Number of steps') + ylab('Amount')
+      print(g)
       medianStepsPerDay = median(StepsPerDay$Steps, na.rm=TRUE)
       meanStepsPerDay  = mean(StepsPerDay$Steps, na.rm = TRUE)
 ```
@@ -43,7 +44,8 @@ Median steps taken per day: `r medianStepsPerDay`
 ```{r}
       meanStepsPerInterval <- aggregate(dataComp$steps, by=list(dataComp$interval), FUN=mean)
       names(meanStepsPerInterval) = c("Interval", "MeanSteps")
-      ggplot(meanStepsPerInterval, aes(Interval, MeanSteps)) + geom_line() + xlab('Interval') + ylab('Amount of mean steps')
+      g <- ggplot(meanStepsPerInterval, aes(Interval, MeanSteps)) + geom_line() + xlab('Interval') + ylab('Amount of mean steps')
+      print(g)
       maxInt <- meanStepsPerInterval[which.max(meanStepsPerInterval$MeanSteps), ]
 ```
 Interval with the maximum average number of steps: `r maxInt$Interval`
@@ -71,7 +73,8 @@ Regarding the missing values there could be a number of possibilities where they
       summary(dataFilled)
       StepsPerDay <- aggregate(dataFilled$steps, by=list(dataFilled$date), FUN=sum)
       names(StepsPerDay) = c("Date", "Steps")
-      ggplot(StepsPerDay, aes(Steps)) + geom_histogram(binwidth=1000, color="darkblue", fill="lightblue") + xlab('Number of steps') + ylab('Amount')
+      g <- ggplot(StepsPerDay, aes(Steps)) + geom_histogram(binwidth=1000, color="darkblue", fill="lightblue") + xlab('Number of steps') + ylab('Amount')
+      print(g)
       medianStepsPerDay = median(StepsPerDay$Steps, na.rm=TRUE)
       meanStepsPerDay  = mean(StepsPerDay$Steps, na.rm = TRUE)
 ```
@@ -96,8 +99,8 @@ For this part the weekdays() function may be of some help here. Use the dataset 
 
       meanStepsPerInterval <- aggregate(dataFilled$steps, by=list(dataFilled$interval, dataFilled$type), FUN=mean)
       names(meanStepsPerInterval) = c("Interval", "Type", "MeanSteps")
-      ggplot(meanStepsPerInterval, aes(Interval, MeanSteps, fill = Type)) + geom_line() + xlab('Interval') + ylab('Amount of mean steps') + facet_grid(rows = vars(Type))
-
+      g <- ggplot(meanStepsPerInterval, aes(Interval, MeanSteps, fill = Type)) + geom_line() + xlab('Interval') + ylab('Amount of mean steps') + facet_grid(rows = vars(Type))
+      print(g)
 ```
 
 The comparison indicates that there is indeed a difference betweend weekdays and weekends. On weekdays there is a much higher peak in the morning compared the weekend. Could be the walk to work. On the other hand the amount of steps for the other intervals are higher on the weekend.
