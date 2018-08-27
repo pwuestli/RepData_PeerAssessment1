@@ -5,9 +5,13 @@ output:
     keep_md: true
 ---
 
+# Reproducible Research: Peer Assessment 1
+
 This assignment makes use of data from a personal activity monitoring device. This device collects data at 5 minute intervals through out the day. The data consists of two months of data from an anonymous individual collected during the months of October and November, 2012 and include the number of steps taken in 5 minute intervals each day.
 
 Dataset source: [Activity monitoring data](https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip), 19.08.2018
+
+
 
 ## Loading and preprocessing the data
 1. load data and package for plotting
@@ -114,7 +118,8 @@ Dataset source: [Activity monitoring data](https://d396qusza40orc.cloudfront.net
 ```r
       StepsPerDay <- aggregate(dataComp$steps, by=list(dataComp$date), FUN=sum)
       names(StepsPerDay) = c("Date", "Steps")
-      ggplot(StepsPerDay, aes(Steps)) + geom_histogram(binwidth=1000, color="darkblue", fill="lightblue") + xlab('Number of steps') + ylab('Amount')
+      g <- ggplot(StepsPerDay, aes(Steps)) + geom_histogram(binwidth=1000, color="darkblue", fill="lightblue") + xlab('Number of steps') + ylab('Amount')
+      print(g)
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
@@ -134,7 +139,8 @@ Median steps taken per day: 10765
 ```r
       meanStepsPerInterval <- aggregate(dataComp$steps, by=list(dataComp$interval), FUN=mean)
       names(meanStepsPerInterval) = c("Interval", "MeanSteps")
-      ggplot(meanStepsPerInterval, aes(Interval, MeanSteps)) + geom_line() + xlab('Interval') + ylab('Amount of mean steps')
+      g <- ggplot(meanStepsPerInterval, aes(Interval, MeanSteps)) + geom_line() + xlab('Interval') + ylab('Amount of mean steps')
+      print(g)
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
@@ -206,7 +212,8 @@ Regarding the missing values there could be a number of possibilities where they
 ```r
       StepsPerDay <- aggregate(dataFilled$steps, by=list(dataFilled$date), FUN=sum)
       names(StepsPerDay) = c("Date", "Steps")
-      ggplot(StepsPerDay, aes(Steps)) + geom_histogram(binwidth=1000, color="darkblue", fill="lightblue") + xlab('Number of steps') + ylab('Amount')
+      g <- ggplot(StepsPerDay, aes(Steps)) + geom_histogram(binwidth=1000, color="darkblue", fill="lightblue") + xlab('Number of steps') + ylab('Amount')
+      print(g)
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
@@ -250,7 +257,8 @@ For this part the weekdays() function may be of some help here. Use the dataset 
 ```r
       meanStepsPerInterval <- aggregate(dataFilled$steps, by=list(dataFilled$interval, dataFilled$type), FUN=mean)
       names(meanStepsPerInterval) = c("Interval", "Type", "MeanSteps")
-      ggplot(meanStepsPerInterval, aes(Interval, MeanSteps, fill = Type)) + geom_line() + xlab('Interval') + ylab('Amount of mean steps') + facet_grid(rows = vars(Type))
+      g <- ggplot(meanStepsPerInterval, aes(Interval, MeanSteps, fill = Type)) + geom_line() + xlab('Interval') + ylab('Amount of mean steps') + facet_grid(rows = vars(Type))
+      print(g)
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
